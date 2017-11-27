@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>JC3-MP Package UI Sandbox</title>
+        <style>
+        body {
+            font-family: Consolas;
+            background-color: grey;
+        }
+        pre {
+            padding: 1%;
+            color: white;
+        }
+        </style>
+    </head>
+    <body>
+        <pre>Select main file (usually it's <b><code>index.html</code></b>) of UI of your package.</pre>
+        <pre id="notFromJcmp" style="display: none; color: black;">You're not from JC3-MP or Sandbox!</pre>
+        
+    </body>
+    <script>
+    (function() {
+        if(typeof jcmp == "undefined") {
+            document.getElementById("notFromJcmp").style.display = "";
+            return;
+        }
+        
+        jcmp.AddEvent("jc3mpPackageUISandbox/event", function(str) {
+            var newEl = document.createElement("pre");
+            newEl.innerHTML = "You called this event! <i>"+str+"</i>";
+            document.body.appendChild(newEl);
+        });
+    })();
+    </script>
+</html>

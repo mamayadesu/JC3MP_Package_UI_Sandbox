@@ -1,0 +1,160 @@
+<html>
+    <head>
+        <title>JC3-MP Package UI Sandbox</title>
+        <style>
+        body {
+            font-family: Calibri;
+            background-color: #36393e;
+            font-size: 18px;
+            color: white;
+            padding-bottom: 400px;
+        }
+        p {
+            padding: 10px;
+            padding-bottom: 2px;
+        }
+        code, pre {
+            white-space: pre;
+            background-color: #2f3136;
+            border: 2px solid #282b30;
+            border-radius: 5px;
+            color: gray;
+            font-family: Consolas;
+            padding: 2px;
+            font-size: 15px;
+            line-height: 50px;
+        }
+        .c {
+            white-space: pre;
+            background-color: none;
+            border: none;
+            border-radius: none;
+            color: none;
+            font-family: Consolas;
+            padding: none;
+            line-height: 20px;
+        }
+        a {
+            color: #0b8da6;
+            text-decoration: none;
+        }
+        .p {
+            padding-top: 0px;
+            padding-bottom: 0px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+        </style>
+    </head>
+    <body>
+        <h2>What's this?</h2>
+        <p><b>JC3-MP Package UI Sandbox</b> is free tool which will help you in development of UI (user interface) for packages for Just Cause 3: Multiplayer Mod</b></p>
+        
+        <h2>What is it can to do?</h2>
+        <p>It can load UI of JC3-MP package and simulate client of JC3-MP</p>
+        <p>This program supports full screen mode, so you can see elements of your package as in game.</p>
+        <p>You can call <b>events</b> of your package from control panel and set any parameters.</p>
+        <p><b>Auxiliary scripts</b> will help you to test events (read below how).</p>
+        <p><b>Fast call buttons</b> can be necessary for fast code execution (calling of event or a lot of events, some code, etc.).<br>
+        So, if you want to execute <i>a big</i> code, you can use fast call buttons</p>
+        <p><b>Debugging console</b> is available on this link: <a href="http://localhost:13173" target="_blank">http://localhost:13173</a>.</p>
+        
+        <h2>Events</h2>
+        <p>You can call events of UI of your package from special menu which is called <b>Events</b>.</p>
+        <p>Use double click to call special window.</p>
+        <p>Also you can add some parameters.</p>
+        <p>Click <b>"+"</b> (add).</p>
+        <p>Set type of new parameter (string (any value), integer (only integers, no fractions), double (integers and fractions) or boolean (only true or false)).</p>
+        <p>Set value and click <b>Call event</b> or add more parameters.</p>
+        <p><i><b>Attention!</b> If you won't set value of parameter, it will be sent anyway.</i></p>
+        
+        <h2>Auxiliary scripts</h2>
+        <p>It is a seperate script, which loads when you load your package.</p>
+        <p>When you load your package, at first your auxiliary script is loaded (if your package has this script in JC3-MP Package UI Sandbox's settings) in separate process from your package.<br>
+        After that there is a loading of your package. If your package hasn't an auxiliary script, loading of it is skipped.</p>
+        <p>It's like <code>client_package/main.js</code>, but doesn't support any classes and methods from normal JC3-MP but supports <code>setInterval</code> and <code>setTimeout</code>.</p>
+        <p>If you want to use auxiliray script, you should make one. Load your package, then go to <b>Auxiliary Scripts</b> -> <b>Select auxiliary script</b> and find your script (.js file).<br>
+        Reload your package.</p>
+        <p>You should use a <code>jcmp</code> object.</p>
+        
+        <h3>Call event</h3>
+        <p class="p">Calls event which is added in your package.</p>
+        <p class="p"><b>Call event</b> in auxiliary script is same, as well as in <code>client_package/main.js</code>.</p>
+        <p class="p"><code>jcmp.CallEvent(<font color="#0b8da6">string</font> eventName, ...any parameters)</code></p>
+        
+        <h3>Add event</h3>
+        <p class="p">Adds event in auxiliary script which can be called from your package.</p>
+        <p class="p"><b>Add event</b> in auxiliary script is same, as well as in <code>client_package/main.js</code>.</p>
+        <p class="p"><code>jcmp.AddEvent(<font color="#0b8da6">string</font> eventName, <font color="#0b8da6">function</font> callback)</code></p>
+        
+        <h3>Add fast call button</h3>
+        <p class="p">Adds fast call button.</p>
+        <p class="p">New fast call button is added in menu which is called <b>Fast Call</b>. Use double click to run this fast call button.</p>
+        <p class="p"><code>jcmp.FastCallButton(<font color="#0b8da6">string</font> title, <font color="#0b8da6">function</font> callback)</code></p>
+        
+        <h3>Execute</h3>
+        <p class="p">Executes Javascript code in package UI.</p>
+        <p class="p">If events for you aren't enough, you can use this method. Run Javascript code in package UI from auxiliary script.</p>
+        <p class="p"><code>jcmp.Execute(<font color="#0b8da6">string</font> javascriptCode)</code></p>
+        
+        <h3>Examples</h3>
+        
+        <p class="p">Send message with green color to chat in default <b>nanos's chat</b> package.</p>
+        <pre><code class="c">jcmp.CallEvent("chat_message", "Hello world!", 0, 255, 0);</code></pre>
+        <br>
+        <br>
+        <p class="p">Add message to chat which you've sent in default <b>nanos's chat</b> package.</p>
+        <pre><code class="c">jcmp.AddEvent("chat_submit_message", function(msg) {
+    jcmp.CallEvent("chat_message", "You: "+msg);
+});</code></pre>
+        <br>
+        <br>
+        <p class="p">Add fast call button which sends message with time of your PC to chat (default <b>nanos's chat</b> package).</p>
+        <pre><code class="c">jcmp.AddFastCallButton("Print time to chat", function() {
+    jcmp.CallEvent("chat_message", (new Date).toLocaleTimeString());
+});</code></pre>
+        <br>
+        <br>
+        <p class="p">Set gray background color of your package.</p>
+        <pre><code class="c">jcmp.Execute("document.body.style.color = 'gray';");</code></pre>
+        <br>
+        <br>
+        <p class="p">Some big example.</p>
+        <pre><code class="c">var id = 0;
+
+setInterval(function() {
+    var message;
+    var r, g, b;
+    switch(id) {
+        case 0:
+            message = "Hello world";
+            r = 255; g = 0; b = 0;
+            break;
+        
+        case 1:
+            message = "It works";
+            r = 0; g = 255; b = 0;
+            break;
+        
+        case 2:
+            message = "meow loves you";
+            r = 0; g = 0; b = 255;
+            break;
+    }
+    jcmp.CallEvent("chat_message", message, r, g, b);
+    
+    id = (id < 2 ? id + 1 : 0);
+}, 3000);
+
+jcmp.AddEvent("chat_submit_message", function(msg) {
+    jcmp.CallEvent("chat_message", "xRef: "+msg, 0, 255, 255);
+});</code></pre>
+    
+    <h2>Contacts</h2>
+    <p>E-Mail: <a href="mailto:mamayadesu@gmail.com" target="_blank">mamayadesu@gmail.com</a></p>
+    <p>Steam: <a href="https://steamcommunity.com/profiles/76561198134749699/" target="_blank">https://steamcommunity.com/profiles/76561198134749699/</a></p>
+    <p>VK: <a href="https://vk.com/id155272407" target="_blank">https://vk.com/id155272407</a></p>
+    <p>Github: <a href="https://github.com/mamayadesu" target="_blank">https://github.com/mamayadesu</a></p>
+    </body>
+    </script>
+</html>

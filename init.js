@@ -1,0 +1,3 @@
+jcmp = {};
+
+// UI methods

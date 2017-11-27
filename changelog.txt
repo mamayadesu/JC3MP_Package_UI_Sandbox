@@ -1,0 +1,16 @@
+* 1.0.0 (25.11.2017)
+// First release
+// Added window for packages
+// Simulation for packages
+// Loading of packages
+// Added window for settings
+// Full screen mode
+// Selection of package
+// Debugging console
+// "Over main window"
+// "Change opacity when it's inactive" (settings window)
+// Reloading of package
+// Events of package (calling + parameters)
+// Auxiliary scripts
+// Paths to auxiliary scripts are stored in file C:\Users\<your username>\AppData\Roaming\JC3MP_Package_UI_Sandbox\auxiliaryscripts
+// Fast call buttons
